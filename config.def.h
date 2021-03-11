@@ -35,12 +35,12 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
+static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
 
 
 static const char *scrotcmd[]  = { "scrot", "-t", "25", NULL };
 static const char *scrotfocusedcmd[]  = { "scrot", "--focused", NULL };
-static const char *dmconf[]  = { "bash", "$HOME/dmscripts/dmconf", NULL };
+static const char *dmenuconfig[]  = { "/home/hackorum/dmscripts/dmconf", NULL };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -86,6 +86,7 @@ static const char *termcmd[]  = { "st", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
+	{ MODKEY,         XK_e,      spawn,          {.v = dmenuconfig} },
 	{ 0,            XK_Print,   spawn,      {.v = scrotcmd } },
 	{ ShiftMask,    XK_Print,   spawn,      {.v = scrotfocusedcmd } },
 	{ ControlMask,  XK_Print,   spawn,      SHCMD("sleep 1s;scrot --select") },
@@ -93,7 +94,6 @@ static Key keys[] = {
 	{ 0,                       	XF86XK_AudioMute, spawn, {.v = mutevol } },
 	{ 0,                       	XF86XK_AudioRaiseVolume, spawn, {.v = upvol   } },
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	{ MODKEY,                       XK_c,      spawn,          {.v = dmconf } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY|ShiftMask,             XK_j,      rotatestack,    {.i = +1 } },
