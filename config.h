@@ -15,16 +15,11 @@ static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#005577";
-/* static const char *colors[][3]      = {
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
-}; 
-*/
-
+static const unsigned int baralpha = 0xd0;
+static const unsigned int borderalpha = OPAQUE;
 static const char norm_fg[] = "#D5C4A1";
 static const char norm_bg[] = "#262626";
 static const char norm_border[] = "#665c54";
-
 static const char sel_fg[] = "#262626";
 static const char sel_bg[] = "#689d6a";
 static const char sel_border[] = "#fbf1c7";
@@ -33,7 +28,11 @@ static const char *colors[][3]      = {
     [SchemeNorm] =   { norm_fg,   norm_bg,    norm_border }, 		     // unfocused wins
     [SchemeSel]  =   { sel_fg,    sel_bg,     sel_border },		     // the focused win
 };
-
+static const unsigned int alphas[][3]      = {
+	/*               fg      bg        border     */
+	[SchemeNorm] = { OPAQUE, baralpha, borderalpha },
+	[SchemeSel]  = { OPAQUE, baralpha, borderalpha },
+};
 /* tagging */
 static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
 
