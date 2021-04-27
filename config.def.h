@@ -17,12 +17,12 @@ static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#005577";
 static const unsigned int baralpha = 0xd0;
 static const unsigned int borderalpha = OPAQUE;
-static const char norm_fg[] = "#D5C4A1";
+static const char norm_fg[] = "#abb2bf";
 static const char norm_bg[] = "#262626";
-static const char norm_border[] = "#665c54";
-static const char sel_fg[] = "#262626";
-static const char sel_bg[] = "#689d6a";
-static const char sel_border[] = "#fbf1c7";
+static const char norm_border[] = "#e5c07b";
+static const char sel_fg[] = "#282c34";
+static const char sel_bg[] = "#98c379";
+static const char sel_border[] = "#61afef";
 static const char *colors[][3]      = {
     /*               fg           bg          border                         */
     [SchemeNorm] =   { norm_fg,   norm_bg,    norm_border }, 		     // unfocused wins
@@ -34,12 +34,11 @@ static const unsigned int alphas[][3]      = {
 	[SchemeSel]  = { OPAQUE, baralpha, borderalpha },
 };
 /* tagging */
-static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
+static const char *tags[] = { "", "", "", "", ""};
 
 
-static const char *scrotcmd[]  = { "scrot", "-t", "25", NULL };
+static const char *scrotcmd[]  = { "scrot", NULL };
 static const char *scrotfocusedcmd[]  = { "scrot", "--focused", NULL };
-static const char *dmenuconfig[]  = { "/home/hackorum/dmscripts/dmconf", NULL };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -75,9 +74,9 @@ static const Layout layouts[] = {
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
-static const char *upvol[]   = { "/usr/bin/pactl", "set-sink-volume", "0", "+5%",     NULL };
-static const char *downvol[] = { "/usr/bin/pactl", "set-sink-volume", "0", "-5%",     NULL };
-static const char *mutevol[] = { "/usr/bin/pactl", "set-sink-mute",   "0", "toggle",  NULL };
+static const char *upvol[]   = { "/usr/bin/pactl", "set-sink-volume", "0", "+5%",    NULL };
+static const char *downvol[] = { "/usr/bin/pactl", "set-sink-volume", "0", "-5%",    NULL };
+static const char *mutevol[] = { "/usr/bin/pactl", "set-sink-mute",   "0", "toggle", NULL };
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", sel_bg, "-sf", col_gray4, NULL };
@@ -86,7 +85,6 @@ static const char *firefoxcmd[]  = { "firefox", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,         XK_e,      spawn,          {.v = dmenuconfig} },
 	{ 0,            XK_Print,   spawn,      {.v = scrotcmd } },
 	{ ShiftMask,    XK_Print,   spawn,      {.v = scrotfocusedcmd } },
 	{ ControlMask,  XK_Print,   spawn,      SHCMD("sleep 1s;scrot --select") },
@@ -94,7 +92,7 @@ static Key keys[] = {
 	{ 0,                       	XF86XK_AudioMute, spawn, {.v = mutevol } },
 	{ 0,                       	XF86XK_AudioRaiseVolume, spawn, {.v = upvol   } },
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask,             XK_f, 		 spawn,          {.v = firefoxcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY|ShiftMask,             XK_j,      rotatestack,    {.i = +1 } },
@@ -105,9 +103,9 @@ static Key keys[] = {
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY,                       XK_Return, zoom,           {0} },
+	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
+	{ MODKEY,                       XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
@@ -123,15 +121,13 @@ static Key keys[] = {
 	{ MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
 	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
+	{ MODKEY|ShiftMask,             XK_semicolon, spawn,       SHCMD("skippy-xd")},
+	{ MODKEY|ShiftMask,             XK_x,      spawn,          SHCMD("betterlockscreen -l dimblur")},
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
 	TAGKEYS(                        XK_4,                      3)
 	TAGKEYS(                        XK_5,                      4)
-	TAGKEYS(                        XK_6,                      5)
-	TAGKEYS(                        XK_7,                      6)
-	TAGKEYS(                        XK_8,                      7)
-	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 };
 
